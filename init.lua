@@ -9,7 +9,10 @@ require('packer').startup(function(use)
 	use 'folke/tokyonight.nvim'
 
 	-- autopair
-	use 'windwp/nvim-autopairs'
+	--use 'windwp/nvim-autopairs'	
+	
+	use {
+	"windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup {} end}
 
 	-- start of vim-cmp 
 
@@ -99,9 +102,6 @@ require('packer').startup(function(use)
   require'lspconfig'.pylsp.setup{
 	capabilities = capabilities,
   }
-
-  	-- LuaSnip installation
-	use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
 
 	-- Nvim Tree Manager installation
 	use { 'kyazdani42/nvim-tree.lua',
