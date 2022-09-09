@@ -11,6 +11,8 @@ require('packer').startup(function(use)
 	-- autopair
 	use 'windwp/nvim-autopairs'
 
+	-- start of vim-cmp 
+
 	use 'neovim/nvim-lspconfig' -- configurations for Nvim LSP
 
 	use 'hrsh7th/cmp-nvim-lsp'
@@ -38,7 +40,6 @@ require('packer').startup(function(use)
         require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
-
 
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -85,7 +86,6 @@ require('packer').startup(function(use)
     })
   })
 
-
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
@@ -98,25 +98,20 @@ require('packer').startup(function(use)
   -- For Pylsp server setup
   require'lspconfig'.pylsp.setup{
 	capabilities = capabilities,
-
   }
+
+  	-- LuaSnip installation
 	use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
+
+	-- Nvim Tree Manager installation
 	use { 'kyazdani42/nvim-tree.lua',
 	requires = {
     'kyazdani42/nvim-web-devicons', -- optional, for file icons
   },
   tag = 'nightly' -- optional, updated every week. (see issue #1193)
-
 }
 
-
-
 end)
-
--- auto bracket completion
-
-
-
 
 -- empty setup using defaults
 require("nvim-tree").setup()
