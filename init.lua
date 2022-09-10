@@ -9,10 +9,12 @@ require('packer').startup(function(use)
 	use 'folke/tokyonight.nvim'
 
 	-- autopair
-	--use 'windwp/nvim-autopairs'	
-	
 	use {
 	"windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup {} end}
+
+	-- treesitter plugin 
+	    use {
+        'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
 	-- start of vim-cmp 
 
@@ -115,6 +117,21 @@ end)
 
 -- empty setup using defaults
 require("nvim-tree").setup()
+
+-- treesitter setup
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "lua", "rust", "html", "javascript", "python", "css"},
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+  auto_install = true,
+
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 -- setup pyright LSP
 require'lspconfig'.pyright.setup{}
