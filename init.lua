@@ -9,13 +9,16 @@ require('packer').startup(function(use)
 	use 'folke/tokyonight.nvim'
 
 	-- autopair
-	use {
-	"windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup {} end}
+	use {"windwp/nvim-autopairs", config = function() 
+		require("nvim-autopairs").setup {} end}
 
 	-- treesitter plugin 
-	    use {
-        'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
+	-- nvim-tree plugin
+	use {'kyazdani42/nvim-tree.lua', requires = {'kyazdani42/nvim-web-devicons'},
+  		tag = 'nightly'}
+	
 	-- start of vim-cmp 
 
 	use 'neovim/nvim-lspconfig' -- configurations for Nvim LSP
@@ -104,14 +107,6 @@ require('packer').startup(function(use)
   require'lspconfig'.pylsp.setup{
 	capabilities = capabilities,
   }
-
-	-- Nvim Tree Manager installation
-	use { 'kyazdani42/nvim-tree.lua',
-	requires = {
-    'kyazdani42/nvim-web-devicons', -- optional, for file icons
-  },
-  tag = 'nightly' -- optional, updated every week. (see issue #1193)
-}
 
 end)
 
