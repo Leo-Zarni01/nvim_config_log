@@ -18,53 +18,48 @@ require('packer').startup(function(use)
 	-- nvim-tree plugin
 	use {'kyazdani42/nvim-tree.lua', requires = {'kyazdani42/nvim-web-devicons'},
   		tag = 'nightly'}
-	
+
+	-- mark-down preview nvim
+	-- install without yarn or npm
+	use({"iamcco/markdown-preview.nvim",run = function() vim.fn["mkdp#util#install"]() end,})
+
+	use 'ferrine/md-img-paste.vim'
+
 	-- start of vim-cmp 
-
 	use 'neovim/nvim-lspconfig' -- configurations for Nvim LSP
-
 	use 'hrsh7th/cmp-nvim-lsp'
-
 	use 'hrsh7th/cmp-buffer'
-
 	use 'hrsh7th/cmp-path'
-
 	use 'hrsh7th/cmp-cmdline'
-
 	use 'hrsh7th/nvim-cmp'
 
 	-- For Luasnip users
 	use 'L3MON4D3/LuaSnip'
-
 	use 'saadparwaiz1/cmp_luasnip'
 
 	vim.g.completeopt="menu,menuone,noselect"	
-
 	local cmp = require'cmp'
-
  	cmp.setup({
-	snippet = {
-	      expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      end,
-    },
+	snippet = {expand = function(args)
+        	require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      end,},
 
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    	mapping = cmp.mapping.preset.insert({
+      		['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      		['<C-f>'] = cmp.mapping.scroll_docs(4),
+      		['<C-Space>'] = cmp.mapping.complete(),
+      		['<C-e>'] = cmp.mapping.abort(),
 
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' }, -- For luasnip users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+		-- Accept currently selected item. 
+		-- Set `select` to `false` to only confirm explicitly selected items.
+      		['<CR>'] = cmp.mapping.confirm({select = true} ), } ),
+
+    	sources = cmp.config.sources({
+      		{name = 'nvim_lsp'},
+		 
+		-- For luasnip users
+      		{name = 'luasnip'},},
+		{ {name = 'buffer'},})})
 
 	-- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
