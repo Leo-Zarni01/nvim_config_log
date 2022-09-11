@@ -157,6 +157,18 @@ require("tokyonight").setup({
   	on_highlights = function(highlights, colors) end,
 })
 
+-- Telescope config setup 
+require('telescope').setup(
+{
+	defaults = {
+		layout_config = {
+			horizontal = { preview_width = 0.65 }
+			
+		}
+	}
+}
+)
+
 -- setup pyright LSP
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.pylsp.setup{}
