@@ -25,6 +25,12 @@ require('packer').startup(function(use)
 
 	use 'ferrine/md-img-paste.vim'
 
+	-- plenary 
+	use 'nvim-lua/plenary.nvim'
+
+	-- Telescope
+	use {'nvim-telescope/telescope.nvim'}	
+
 	-- start of vim-cmp 
 	use 'neovim/nvim-lspconfig' -- configurations for Nvim LSP
 	use 'hrsh7th/cmp-nvim-lsp'
