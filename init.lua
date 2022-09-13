@@ -121,12 +121,11 @@ require("tokyonight").setup({
 
   	styles = {
     	-- Style to be applied to different syntax groups
-    	-- Value is any valid attr-list value `:help attr-list`
-	
-    	comments = "italic",
-    	keywords = "italic",
-    	functions = "NONE",
-    	variables = "NONE",
+    	-- Value is any valid attr-list value :help nvim_set_hl`	
+    	comments = {italic = false},
+    	keywords = {italic = false},
+    	functions = {}, 
+    	variables = {},
 	
 	-- Background styles. Can be "dark", "transparent" or "normal"
 	sidebars = "dark", -- style for sidebars, see below
@@ -159,19 +158,20 @@ require("tokyonight").setup({
 
 -- Telescope config setup 
 require('telescope').setup(
-{
-	defaults = {
-		layout_config = {
-			horizontal = { preview_width = 0.65 }
-			
-		}
+{ defaults = { layout_config = {
+		horizontal = { preview_width = 0.65 } } }
 	}
-}
 )
+
+-- nvim-web-devicons setup
+require'nvim-web-devicons'.setup{
+	default = true;
+}
+--require'nvim-web-devicons'.get_icons()
 
 -- setup pyright LSP
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.pylsp.setup{}
 
 vim.cmd[[colorscheme tokyonight]]
-
+vim.api.nvim_set_hl(0, 'TSVariable', {fg = "#E8EDDF"})
