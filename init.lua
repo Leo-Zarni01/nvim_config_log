@@ -85,10 +85,31 @@ require('packer').startup(function(use)
     		sources = cmp.config.sources({
       			{name = 'path'}}, {
       			{name = 'cmdline'}})})
-
-  	-- Set up lspconfig.
+  
+	-- Set up lspconfig.
   	local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  	-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+	
+	-- overriding language client capabilities for html
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+	-- For Vscode html server setup -- not working 14/9/2022
+	require'lspconfig'.html.setup {capabilities = capabilities,
+		cmd = {"vscode-html-language-server","--stdio"},
+		filetypes = {"html"},
+		init_options = {
+			configurationSection = {"html", "css", "javascript"},
+			embeddedLanguages = {
+				css = true,
+				javascript = true 
+			},
+			provideFormatter = true
+		},
+		settings = {},
+		single_file_support = true 
+		}	
+
+	-- For Typescript server setup
+	require'lspconfig'.tsserver.setup{capabilities = capabilities,}
 
   	-- For Pyright server setup
   	require'lspconfig'.pyright.setup {capabilities = capabilities,}
@@ -96,6 +117,8 @@ require('packer').startup(function(use)
   	-- For Pylsp server setup
   	require'lspconfig'.pylsp.setup{capabilities = capabilities,}
 
+	-- For marksman server setup
+	require'lspconfig'.marksman.setup{capabilities = capabilities,}
 end)
 
 -- empty setup using defaults
@@ -103,7 +126,7 @@ require("nvim-tree").setup()
 
 -- treesitter setup
 require'nvim-treesitter.configs'.setup {
-  	ensure_installed = { "c", "lua", "rust", "html", "javascript", "python", "css"},
+  	ensure_installed = { "c", "lua", "rust", "html", "javascript", "python", "css", "markdown"},
 
   	-- Install parsers synchronously (only applied to `ensure_installed`)
   	sync_install = false,
@@ -167,11 +190,22 @@ require('telescope').setup(
 require'nvim-web-devicons'.setup{
 	default = true;
 }
---require'nvim-web-devicons'.get_icons()
 
--- setup pyright LSP
+-- setting up pyright
 require'lspconfig'.pyright.setup{}
+
+-- setting up Pylsp
 require'lspconfig'.pylsp.setup{}
+
+-- setting up Marksman
+require'lspconfig'.marksman.setup{
+}
+
+-- setting up html
+require'lspconfig'.html.setup{}
+
+-- setting up typescript
+require'lspconfig'.tsserver.setup{}
 
 vim.cmd[[colorscheme tokyonight]]
 vim.api.nvim_set_hl(0, 'TSVariable', {fg = "#E8EDDF"})
