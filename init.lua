@@ -33,6 +33,7 @@ require('packer').startup(function(use)
 
 	-- start of vim-cmp 
 	use 'neovim/nvim-lspconfig' -- configurations for Nvim LSP
+
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'hrsh7th/cmp-buffer'
 	use 'hrsh7th/cmp-path'
@@ -90,23 +91,13 @@ require('packer').startup(function(use)
   	local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 	
 	-- overriding language client capabilities for html
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	--capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 	-- For Vscode html server setup -- not working 14/9/2022
-	require'lspconfig'.html.setup {capabilities = capabilities,
-		cmd = {"vscode-html-language-server","--stdio"},
-		filetypes = {"html"},
-		init_options = {
-			configurationSection = {"html", "css", "javascript"},
-			embeddedLanguages = {
-				css = true,
-				javascript = true 
-			},
-			provideFormatter = true
-		},
-		settings = {},
-		single_file_support = true 
-		}	
+	require'lspconfig'.html.setup {capabilities = capabilities,}	
+
+	-- For css server setup
+	require'lspconfig'.cssls.setup {capabilities = capabilities,}
 
 	-- For Typescript server setup
 	require'lspconfig'.tsserver.setup{capabilities = capabilities,}
@@ -204,8 +195,14 @@ require'lspconfig'.marksman.setup{
 -- setting up html
 require'lspconfig'.html.setup{}
 
+-- setting up css 
+require'lspconfig'.cssls.setup{}
+
 -- setting up typescript
 require'lspconfig'.tsserver.setup{}
+
+-- setting up LuaSnip 
+local luasnip = require 'luasnip'
 
 vim.cmd[[colorscheme tokyonight]]
 vim.api.nvim_set_hl(0, 'TSVariable', {fg = "#E8EDDF"})
