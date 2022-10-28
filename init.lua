@@ -1,10 +1,13 @@
-
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap('i', 'jk', '<ESC>', { noremap = true })
 vim.o.relativenumber = true
 
+
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
+
+	-- bufferline 
+	use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}	
 
 	-- colorscheme
 	use 'folke/tokyonight.nvim'
@@ -15,6 +18,8 @@ require('packer').startup(function(use)
 
 	-- treesitter plugin 
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+	use 'p00f/nvim-ts-rainbow'
+	use 'nvim-treesitter/playground'
 
 	-- nvim-tree plugin
 	use {'kyazdani42/nvim-tree.lua', requires = {'kyazdani42/nvim-web-devicons'},
@@ -89,13 +94,15 @@ require('packer').startup(function(use)
       			{name = 'cmdline'}})})
   
 	-- Set up lspconfig.
-  	local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-	
+	local capabilities = require("cmp_nvim_lsp").default_capabilities()	
 	-- overriding language client capabilities for html
 	--capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 	-- For Vscode html server setup -- not working 14/9/2022
-	require'lspconfig'.html.setup {capabilities = capabilities,}	
+	require'lspconfig'.html.setup {capabilities = capabilities,
+		cmd = { "vscode-html-language-server", "--stdio" }	
+	
+		}	
 
 	-- For css server setup
 	require'lspconfig'.cssls.setup {capabilities = capabilities,}
@@ -124,9 +131,35 @@ require'nvim-treesitter.configs'.setup {
   	sync_install = false,
   	auto_install = true,
 	highlight = {enable = true,
-		additional_vim_regex_highlighting = false,
+		additional_vim_regex_highlighting = false,},
+
+	rainbow = {
+    		enable = true,
+    		-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    		extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    		max_file_lines = nil, -- Do not enable for files with more than n lines, int
+    		-- colors = {}, -- table of hex strings
+    		-- termcolors = {} -- table of colour name strings
   },
-}
+	  playground = {
+	    enable = true,
+	    disable = {},
+	    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+	    persist_queries = false, -- Whether the query persists across vim sessions
+	    keybindings = {
+	      toggle_query_editor = 'o',
+	      toggle_hl_groups = 'i',
+	      toggle_injected_languages = 't',
+	      toggle_anonymous_nodes = 'a',
+	      toggle_language_display = 'I',
+	      focus_language = 'f',
+	      unfocus_language = 'F',
+	      update = 'R',
+	      goto_node = '<cr>',
+	      show_help = '?',
+	    },
+  }
+	}
 
 -- setting up tokyonight config
 require("tokyonight").setup({
@@ -206,4 +239,13 @@ require'lspconfig'.tsserver.setup{}
 local luasnip = require 'luasnip'
 
 vim.cmd[[colorscheme tokyonight]]
-vim.api.nvim_set_hl(0, 'TSVariable', {fg = "#E8EDDF"})
+vim.api.nvim_set_hl(0, '@variable', {fg = "#DECADE" })
+
+-- setting up bufferline 
+vim.opt.termguicolors = true
+require("bufferline").setup{}
+
+-- configuring nvim-tree-kyazdani
+vim.cmd('nnoremap <space>e :NvimTreeToggle<CR>')
+
+
