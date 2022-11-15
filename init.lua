@@ -6,8 +6,31 @@ vim.o.relativenumber = true
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
+	--zen-mode
+	use {"folke/zen-mode.nvim",
+  		config = function()
+    			require("zen-mode").setup {
+    		}
+  		end
+			}
+
+	use { "folke/twilight.nvim",
+  		config = function()
+    			require("twilight").setup {
+      			-- your configuration comes here
+      			-- or leave it empty to use the default settings
+      			-- refer to the configuration section below
+    		}
+  		end
+			}
+
 	-- bufferline 
 	use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}	
+
+	-- nvim termtoggle 
+	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+  		require("toggleterm").setup()
+			end}	
 
 	-- colorscheme
 	use 'folke/tokyonight.nvim'
@@ -248,4 +271,45 @@ require("bufferline").setup{}
 -- configuring nvim-tree-kyazdani
 vim.cmd('nnoremap <space>e :NvimTreeToggle<CR>')
 
+-- configuring nvim-zen-mode keybinding
+vim.cmd('nnoremap <space>z :ZenMode<CR>')
+
+-- disable lsp warning messages and signs 
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        signs = false,
+        virtual_text = false,
+        underline = false,
+        update_in_insert = false,
+      }
+    )
+
+-- toggle term config
+require("toggleterm").setup{
+  -- size can be a number or function which is passed the current terminal
+  	size = 20,
+  	open_mapping = [[<c-t>]],
+  	hide_numbers = true, -- hide the number column in toggleterm buffers
+  	shade_filetypes = {},
+  	highlights = {
+    		border = "Normal",
+    		background = "Normal"},
+  					
+  	shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
+  	shading_factor = 2, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+  	start_in_insert = true,
+  	insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  	--terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+  	persist_size = true,
+  	-- persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
+  	direction = 'float',
+  	close_on_exit = true, -- close the terminal window when the process exits
+  	shell = vim.o.shell, -- change the default shell
+  	--auto_scroll = true, -- automatically scroll to the bottom on terminal output
+  -- This field is only relevant if direction is set to 'float'
+  	float_opts = {
+    		border = 'curved',
+    		winblend = 3,
+  				},
+			}
 
