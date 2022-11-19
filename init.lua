@@ -32,6 +32,12 @@ require('packer').startup(function(use)
   		require("toggleterm").setup()
 			end}	
 
+	-- comment.nvim 
+	use {'numToStr/Comment.nvim',
+    		config = function()
+        	require('Comment').setup()
+    			end}	
+
 	-- colorscheme
 	use 'folke/tokyonight.nvim'
 
@@ -118,14 +124,11 @@ require('packer').startup(function(use)
   
 	-- Set up lspconfig.
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()	
-	-- overriding language client capabilities for html
-	--capabilities.textDocument.completion.completionItem.snippetSupport = true
+		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-	-- For Vscode html server setup -- not working 14/9/2022
-	require'lspconfig'.html.setup {capabilities = capabilities,
-		cmd = { "vscode-html-language-server", "--stdio" }	
-	
-		}	
+	require'lspconfig'.html.setup{
+		capabilities = capabilities,
+	}
 
 	-- For css server setup
 	require'lspconfig'.cssls.setup {capabilities = capabilities,}
@@ -312,4 +315,5 @@ require("toggleterm").setup{
     		winblend = 3,
   				},
 			}
-
+-- comment.nvim config
+require('Comment').setup()
