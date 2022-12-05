@@ -27,11 +27,14 @@ require('packer').startup(function(use)
 	-- bufferline 
 	use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}	
 
+	-- lualine
+	use {'nvim-lualine/lualine.nvim',
+  		requires = { 'kyazdani42/nvim-web-devicons', opt = true }}
+
 	-- nvim termtoggle 
 	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
   		require("toggleterm").setup()
 			end}	
-
 	-- comment.nvim 
 	use {'numToStr/Comment.nvim',
     		config = function()
@@ -265,17 +268,24 @@ require'lspconfig'.tsserver.setup{}
 local luasnip = require 'luasnip'
 
 vim.cmd[[colorscheme tokyonight]]
-vim.api.nvim_set_hl(0, '@variable', {fg = "#DECADE" })
+vim.api.nvim_set_hl(0, '@variable', {fg = "#7cb2dd" })
 
 -- setting up bufferline 
 vim.opt.termguicolors = true
 require("bufferline").setup{}
+vim.cmd[[
+nnoremap <silent><TAB> :BufferLineCycleNext<CR>
+nnoremap <silent><S-TAB> :BufferLineCyclePrev<CR>
+]]
 
 -- configuring nvim-tree-kyazdani
 vim.cmd('nnoremap <space>e :NvimTreeToggle<CR>')
 
 -- configuring nvim-zen-mode keybinding
 vim.cmd('nnoremap <space>z :ZenMode<CR>')
+
+-- configuring markdown-preview keybinding
+vim.cmd('nnoremap md :MarkdownPreview<CR>')
 
 -- disable lsp warning messages and signs 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -315,5 +325,8 @@ require("toggleterm").setup{
     		winblend = 3,
   				},
 			}
--- comment.nvim config
+-- comment setup
 require('Comment').setup()
+
+-- lualine setup
+require('lualine').setup()
