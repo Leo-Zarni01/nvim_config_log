@@ -1,11 +1,18 @@
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap('i', 'jk', '<ESC>', { noremap = true })
 vim.o.relativenumber = true
-
+vim.cmd "set linebreak"
+vim.cmd "set cursorline"
 
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
+	-- mason lsp installer
+	use { "williamboman/mason.nvim" }
+
+	-- rich presence
+	use 'andweeb/presence.nvim'
+	
 	--zen-mode
 	use {"folke/zen-mode.nvim",
   		config = function()
@@ -147,6 +154,9 @@ require('packer').startup(function(use)
 
 	-- For marksman server setup
 	require'lspconfig'.marksman.setup{capabilities = capabilities,}
+
+	-- For C server setup
+	require'lspconfig'.clangd.setup{capabilities = capabilities}
 end)
 
 -- empty setup using defaults
@@ -264,6 +274,9 @@ require'lspconfig'.cssls.setup{}
 -- setting up typescript
 require'lspconfig'.tsserver.setup{}
 
+-- setting up clangd 
+require'lspconfig'.clangd.setup{}
+
 -- setting up LuaSnip 
 local luasnip = require 'luasnip'
 
@@ -277,6 +290,9 @@ vim.cmd[[
 nnoremap <silent><TAB> :BufferLineCycleNext<CR>
 nnoremap <silent><S-TAB> :BufferLineCyclePrev<CR>
 ]]
+
+-- configuring buffer close keybind 
+vim.cmd('nnoremap bq :bdelete<CR>')
 
 -- configuring nvim-tree-kyazdani
 vim.cmd('nnoremap <space>e :NvimTreeToggle<CR>')
@@ -330,3 +346,6 @@ require('Comment').setup()
 
 -- lualine setup
 require('lualine').setup()
+
+-- mason setup
+require("mason").setup()
