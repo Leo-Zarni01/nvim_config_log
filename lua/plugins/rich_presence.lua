@@ -1,10 +1,20 @@
+-- return {
+--   {
+--     "andweeb/presence.nvim",
+--     opts = {
+--       main_image = "file",
+--     },
+--   },
+-- }
+
+-- not working yet
 return {
-  {
-    "andweeb/presence.nvim",
-    opts = {
-      main_image = "file",
+  "vyfor/cord.nvim",
+  build = ":Cord update",
+  opts = {
+    display = {
+      theme = "catppuccin",
+      flavor = "accent",
     },
   },
 }
-
--- not working yet
