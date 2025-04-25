@@ -1,4 +1,16 @@
 -- return {
+--   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+--   {
+--     "baliestri/aura-theme",
+--     lazy = false,
+--     priority = 1000,
+--     config = function(plugin)
+--       vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
+--       vim.cmd([[colorscheme aura-dark]])
+--     end,
+--   },
+-- }
+
 --   -- add gruvbox
 --   -- { "ellisonleao/gruvbox.nvim" },
 --   -- { "AlphaTechnolog/onedarker.nvim" },
@@ -25,19 +37,20 @@ return {
       vim.cmd.colorscheme("gruvbox-material")
     end,
   },
-  -- {
-  --   "catppuccin/nvim",
-  --   name = "catppuccin",
-  --   config = function()
-  --     require("catppuccin").setup({
-  --       flavour = "frappe", -- Set flavor here
-  --     })
-  --   end,
-  -- },
-  -- {
-  --   "LazyVim/LazyVim",
-  --   opts = {
-  --     colorscheme = "catppuccin",
-  --   },
-  -- },
 }
+-- {
+--   "catppuccin/nvim",
+--   name = "catppuccin",
+--   config = function()
+--     require("catppuccin").setup({
+--       flavour = "frappe", -- Set flavor here
+--     })
+--   end,
+-- },
+-- {
+--   "LazyVim/LazyVim",
+--   opts = {
+--     colorscheme = "catppuccin",
+--   },
+-- },
+-- }
